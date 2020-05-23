@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Everest_Video_Library.Models.VideoLibrary.ArtistAlbum>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+    <div class="jumbotron">
+        <h2 class="text-center">@Model.ToList()[0].Artists.FirstName&nbsp;@Model.ToList()[0].Artists.LastName</h2>
+        <p><i class="fas fa-envelope-square"></i>  @Model.ToList()[0].Artists.Email</p>
+        <p><i class="fas fa-map-marker-alt"></i> @Model.ToList()[0].Artists.Address</p>
+    </div>
+
+
+
+
+
+
+
+<div class="d-flex flex-row flex-wrap">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-8 col-md-6 col-lg-4">
+            <div class="card">
+                <img class="card-img-top" src="/@item.Albums.CoverImagePath" style="height:250px"/>
+                <div class="card-body">
+
+                    <b class="card-title text-center">@item.Albums.Name</b>
+                    <p class="card-text">
+                        @item.Albums.Description
+                    </p>
+                    <div class="d-flex flex-row align-items-center">
+                        <h3>  Produce By : </h3>
+                        <div> @item.Albums.Producer.Name</div>
+                    </div>
+                    <div class="d-flex flex-row align-items-center">
+                        <h4>  Studio : </h4>
+                        <div> @item.Albums.Studio.Name</div>
+                    </div>
+                    @item.Albums.NoOfStock
+                        @if (item.Albums.NoOfStock > 0)
+                        {
+                    <h2> Stock </h2>
+                        }
+                        else
+                        {
+                            <h2>
+                                Out Of Stock
+                            </h2>
+                        }   
+
+
+                </div>
+            </div>
+
+        </div>
+
+    }
+</div>
+
+
+

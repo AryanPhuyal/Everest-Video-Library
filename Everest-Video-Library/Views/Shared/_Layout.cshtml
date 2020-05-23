@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css")
+    @Styles.Render("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+        
+        <a class="navbar-brand" href="/Home">Everest Video Library</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    @Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("About", "About", "Home", new { @class = "nav-link" })
+                </li>
+                <li class="nav-item">
+                    @Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        More
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @Html.ActionLink("Genric", "Index", "Catagories", new { @class = "dropdown-item" })
+                        @Html.ActionLink("Albums", "Index", "Albums", new { @class = "dropdown-item" })
+                        @Html.ActionLink("Dvds", "Index","Dvds", new { @class = "dropdown-item" })
+                        @Html.ActionLink("Artists","Index","Artists",new { @class="dropdown-item"})
+                        @Html.ActionLink("Artist and album","Index","ArtistAlbum", new { @class="dropdown-item"})
+
+                        @Html.ActionLink("Producer", "Index", "Producer", new { @class = "dropdown-item" })
+                        @Html.ActionLink("Member Catagories", "Index", "MemberCatagories", new { @class = "dropdown-item" })
+
+                        @Html.ActionLink("Members", "Index", "Members", new { @class = "dropdown-item" })
+                        @Html.ActionLink("Lones", "Index", "Lones", new { @class = "dropdown-item" })
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js")
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

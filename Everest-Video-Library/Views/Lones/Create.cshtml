@@ -1,0 +1,65 @@
+﻿@model Everest_Video_Library.Controllers.ViewModel.AddLone
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@if (ViewBag.Error!=null)
+{
+    <p class="alert alert-danger">@ViewBag.Error </p>
+}
+@if (ViewBag.Success !=null)
+{
+    <p class="alert alert-success">@ViewBag.Success </p>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="form-horizontal">
+        <h4>AddLone</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label for="Member"> Members </label>
+            <select class="form-control" id="Member" name="MemberId">
+                @foreach (Everest_Video_Library.Models.VideoLibrary.Member member in Model.Members)
+                {
+                    <option value="@member.Id"> @member.Email </option>
+
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Album">
+                ALbum Name
+            </label>
+            <select class="form-control" id="Album" name="AlbumId">
+                @foreach (Everest_Video_Library.Models.VideoLibrary.Album album in Model.Albums)
+                {
+                    <option value="@album.Id">  @album.Name </option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
