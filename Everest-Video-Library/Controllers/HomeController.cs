@@ -17,67 +17,46 @@ namespace Everest_Video_Library.Controllers
         [Route("/{onStock:int?}/{actor}")]
         public ActionResult Index(string onStock,string actor)
         {
-            IQueryable<Album> albums;
-            if (onStock=="on" && actor==null)
-            {
-                albums = (from a in db.Albums
-                          join aa in db.ArtistAlbums on a.Id equals aa.AlbumId
-                          join ar in db.Artists on aa.ArtistId equals ar.Id
-                          where a.NoOfStock >0
-                          select new Album {
-                          a
-                          }
-                          );
-                return View(albums.ToList());
 
-            }
-            else if (onStock == "on"&&actor!=null )
+            List<Album> allAlbum = new List<Album>();
+            var albums = db.Albums.OrderBy(X=>X.ReleaseDate).ToList();
+            var artistAlbum = db.ArtistAlbums.ToList();
+            foreach (Album album in albums)
             {
-                albums = (from a in db.Albums
-                          join aa in db.ArtistAlbums on a.Id equals aa.AlbumId
-                          join ar in db.Artists on aa.ArtistId equals ar.Id
-                          where a.NoOfStock > 0 && ar.LastName ==actor 
-                          select new Album
-                          {
-                              Id = a.Id,
-                              Name = a.Name,
-                              Length = a.Length,
-                              NoOfCopies = a.NoOfCopies,
-                              NoOfStock = a.NoOfStock,
-                              Price = a.Price,
-                              Producer = a.Producer,
-                              ReleaseDate = a.ReleaseDate,
-                          });
-            return View(albums.ToList());
-
-            }
-            else if (onStock == null && actor != null)
-            {
-                albums = (from a in db.Albums
-                          join aa in db.ArtistAlbums on a.Id equals aa.AlbumId
-                          join ar in db.Artists on aa.ArtistId equals ar.Id
-                          where ar.LastName == actor
-                          select new Album
-                          {
-                              Id = a.Id,
-                              Name = a.Name,
-                              Length = a.Length,
-                              NoOfCopies = a.NoOfCopies,
-                              NoOfStock = a.NoOfStock,
-                              Price = a.Price,
-                              Producer = a.Producer,
-                              ReleaseDate = a.ReleaseDate,
-                          });
-                return View(albums.ToList());
-
+                var artist = db.ArtistAlbums.Where(X => X.AlbumId == album.Id).ToList();
+                album.ArtistAlbums = artist;
+                allAlbum.Add(album);
             }
 
-            else
+            if (actor != null && actor != "") 
             {
-                albums = db.Albums;
-                return View(albums.ToList());
+                foreach(Album album in allAlbum.ToList())
+                {
+                    if (album.ArtistAlbums.Count() == 0)
+                    {
+                        allAlbum.Remove(album);
+                    }
+                    foreach(ArtistAlbum a in album.ArtistAlbums.ToList())
+                    {
+                        if(a.Artists.LastName.ToLower() != actor.ToLower())
+                        {
+                            allAlbum.Remove(album);
+                            break;
+                        }
+                    }
+                }
             }
-
+            if (onStock != null && onStock == "on")
+            {
+                foreach (Album album in allAlbum.ToList())
+                {
+                    if (album.NoOfStock <= 0)
+                    {
+                        allAlbum.Remove(album);
+                    }
+                }
+            }
+            return View(allAlbum);
         }
 
         public ActionResult About()

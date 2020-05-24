@@ -18,5 +18,6 @@ namespace Everest_Video_Library.Models.VideoLibrary
         public virtual Album Albums { get; set; }
         [ForeignKey("ArtistId")]
         public virtual Artist Artists { get; set; }
+
     }
 }

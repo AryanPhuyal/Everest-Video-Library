@@ -28,7 +28,10 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var lones = db.Lones.Where(X => X.DvdId == id).ToList();
+
             Dvd dvd = db.Dvds.Find(id);
+            dvd.Lones = lones;
             if (dvd == null)
             {
                 return HttpNotFound();

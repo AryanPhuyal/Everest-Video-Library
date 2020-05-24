@@ -193,9 +193,16 @@
     <Compile Include="Migrations\202005231128398_migration2.Designer.cs">
       <DependentUpon>202005231128398_migration2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005231537150_migration3.cs" />
+    <Compile Include="Migrations\202005231537150_migration3.Designer.cs">
+      <DependentUpon>202005231537150_migration3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005231902533_migration4.cs" />
+    <Compile Include="Migrations\202005231902533_migration4.Designer.cs">
+      <DependentUpon>202005231902533_migration4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewModel\AddLone.cs" />
-    <Compile Include="Models\ViewModel\AlbumList.cs" />
     <Compile Include="Models\ViewModel\AlbumOfArtist.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -324,6 +331,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\ViewsController\" />
     <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
@@ -348,6 +356,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005231128398_migration2.resx">
       <DependentUpon>202005231128398_migration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005231537150_migration3.resx">
+      <DependentUpon>202005231537150_migration3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005231902533_migration4.resx">
+      <DependentUpon>202005231902533_migration4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -9,26 +9,64 @@
 <div>
     <h4>Dvd</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Album.CoverImagePath)
-        </dt>
+    <div class="col-12 d-flex justify-content-center" >
+        <img  src="/@Model.Album.CoverImagePath" style="height:400px;width:400px;" />
 
-        <dd>
-            @Html.DisplayFor(model => model.Album.CoverImagePath)
-        </dd>
+    </div>
+           <h2 class="text-center"> @Html.DisplayFor(model=>model.Album.Name) </h2>
+           <dl class="dl-horizontal">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OnStock)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.OnStock)
-        </dd>
+               <dt>
+                   @Html.DisplayNameFor(model => model.OnStock)
+               </dt>
 
-    </dl>
+               <dd>
+                   @Html.DisplayFor(model => model.OnStock)
+               </dd>
+
+           </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<table class="table table-striped" >
+    <thead>
+        <tr>
+            <td>
+                Member Id
+            </td>
+            <td>
+                Member Name
+            </td>
+            <td>
+                Dvd Id
+            </td>
+            <td>
+                Album Name
+            </td>
+            <td>
+                Date Out
+            </td>
+            <td>
+                Returned Date
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var lone in Model.Lones)
+        {
+            <tr>
+                <td> @lone.Members.Id</td>
+                <td>@lone.Members.FirstName @lone.Members.LastName</td>
+                <td>@lone.DvdId</td>
+                <td>@lone.Dvds.Album.Name</td>
+                <td>@lone.LoneDate</td>
+                <td>@lone.ReturnDate</td>
+            </tr>
+
+        }
+    </tbody>
+</table>

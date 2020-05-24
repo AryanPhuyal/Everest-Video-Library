@@ -205,6 +205,31 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
             return RedirectToAction("Index");
         }
 
+
+        [Route("/{dvd:int?}/{member:int?}")]
+        public ActionResult Return(int? dvd,int? member)
+        {
+            if(dvd==null&member==null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var Albumdvd = db.Dvds.FirstOrDefault(X => X.Id == dvd);
+            Albumdvd.OnStock = true;
+            var lone = db.Lones.FirstOrDefault(X => X.DvdId == dvd);
+            lone.ReturnedDate = DateTime.Today;
+            if (DateTime.Today > lone.ReturnDate)
+            {
+                int daysMore = (DateTime.Today - (DateTime)lone.ReturnDate).Days;
+
+                decimal finrPerday = lone.Members.Catagory.FinePerDays;
+                lone.FineAmount = finrPerday * daysMore;
+            }
+            var album = db.Albums.FirstOrDefault(X => X.Id == lone.Dvds.AlbumId);
+            album.NoOfStock += 1;
+            db.SaveChanges();
+            return Redirect("/Members");
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

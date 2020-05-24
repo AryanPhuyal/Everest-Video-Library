@@ -14,94 +14,62 @@
             <label class="form-check-label mx-5" for="onStock">Only show albums on stock</label>
         </div>
         <div class="form-group">
-            <input  class="form-control" name="artist" placeholder="Type artist last name to search .."/>
+            <input class="form-control" name="actor" placeholder="Type artist last name to search .." />
         </div>
         <button class="btn btn-dark" type="submit"> Search </button>
 
     </div>
 
 }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Catagory.Name)
-        </th>
-        <th>
-            Producer
-        </th>
-        <th>
-            Studio
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NoOfCopies)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Length)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NoOfStock)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CoverImagePath)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AgeContent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-   
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Catagory.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Producer.Name)   
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Studio.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ReleaseDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NoOfCopies)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Length)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NoOfStock)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CoverImagePath)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AgeContent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+<div class="d-flex flex-row flex-wrap">
 
-</table>
+
+    @foreach (var item in Model)
+    {
+            var image = "/" + item.CoverImagePath;
+
+
+        <div class="col-sm-10 col-md-6 col-lg-4 m-auto">
+            <div class="card m-3">
+                @**
+        <div style="background-image:url("@image")" class="card-img-top"></div>
+                *@
+                <img src="@image" class="card-img-top"/>
+                <div class="card-body">
+
+                    <h3 class="card-title text-center" style="text-transform:capitalize">
+                        @item.Name
+                    </h3>
+                    <div class="d-flex">
+                        <p class="text-muted">Produced By: </p> &nbsp; <p> @item.Producer.Name</p>
+                    </div>
+                    <div class="d-flex">
+                        <p class="text-muted">Studio : </p> &nbsp; <p> @item.Studio.Name</p>
+                    </div>
+                    <div class="d-flex flex-wrap">
+
+                        <p class="text-muted">Produced By: </p> &nbsp; <p> @item.Producer.Name</p>
+                    </div>
+                    <h4 class="text-center">Artists</h4>
+                    <div class="d-flex flex-wrap flex-row">
+                        @foreach (var i in item.ArtistAlbums)
+                        {
+                            <div class="col-6">
+                                <h5> @i.Artists.FirstName  @i.Artists.LastName </h5>
+                            </div>
+                        }
+
+                    </div>
+                    <span class="text-muted">@item.ReleaseDate</span>
+                    <div class=" my-3 col d-flex justify-content-center" >
+                        <a class="btn btn-dark text-light m-auto"> View Details</a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    }
+</div>

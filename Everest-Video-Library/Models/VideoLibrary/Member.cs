@@ -18,5 +18,7 @@ namespace Everest_Video_Library.Models.VideoLibrary
         [ForeignKey("CatagoryId")]
         public virtual MemberCatagory Catagory { get; set; }
 
+        public IEnumerable<Lone> Lones { get; set; }
+
     }
 }

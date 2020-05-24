@@ -18,7 +18,12 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
         // GET: Members
         public ActionResult Index()
         {
-            var members = db.Members.Include(m => m.Catagory);
+            
+            var members = db.Members.Include(m => m.Catagory).OrderBy(X=>X.FirstName);
+            foreach(Member member in members)
+            {
+                member.Lones = db.Lones.Where(X => X.MemberId == member.Id);
+            }
             return View(members.ToList());
         }
 
@@ -29,7 +34,11 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var lones = db.Lones.Where(X => X.MemberId == id && DateTime.Compare(X.LoneDate,DateTime.Today)<=31).ToList();
             Member member = db.Members.Find(id);
+            member.Lones = lones;
+
+
             if (member == null)
             {
                 return HttpNotFound();

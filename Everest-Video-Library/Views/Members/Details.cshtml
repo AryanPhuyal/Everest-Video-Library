@@ -67,8 +67,68 @@
         </dd>
 
     </dl>
+
+
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>DVD Id</td>>
+            <td>
+                Album Name
+            </td>
+            <td> Lone Date </td>
+            <td>
+                Return Date
+            </td>
+            <td>
+                Returned Date
+            </td>
+            <td>
+                Fine Amount
+            </td>
+            <td>
+                Return Dvd
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var lone in Model.Lones)
+        {
+            <tr>
+                <td> @lone.DvdId</td>
+
+            <td>
+                @lone.Dvds.Album.Name
+            </td>
+          <td>
+            @lone.LoneDate
+        </td>
+        <td>
+            @lone.ReturnDate
+        </td>
+        <td>
+    @if (lone.ReturnedDate==null)
+    {
+            <span> Not Returned</span>
+    }
+    else
+    {
+        <span>@lone.ReturnedDate</span>
+    }
+        </td>
+                <td>
+                   12
+                </td>
+                <td>
+                    <a class="btn btn-success text-light" href="/lones/return/?dvd=@lone.DvdId&member=@lone.MemberId">Return Dvd</a>
+                </td>
+        </tr>
+    }
+
+        </tbody>
+    </table>
