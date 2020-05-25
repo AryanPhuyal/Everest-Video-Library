@@ -168,9 +168,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\RoleMastersController.cs" />
     <Compile Include="Controllers\Utility\SaveToFile.cs" />
     <Compile Include="Controllers\VideoLibrary\AlbumsController.cs" />
     <Compile Include="Controllers\VideoLibrary\ArtistAlbumsController.cs" />
@@ -186,8 +186,11 @@
     <Compile Include="Migrations\202005250446214_initial migration.Designer.cs">
       <DependentUpon>202005250446214_initial migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005250541071_initial migration1.cs" />
+    <Compile Include="Migrations\202005250541071_initial migration1.Designer.cs">
+      <DependentUpon>202005250541071_initial migration1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\RoleMaster.cs" />
     <Compile Include="Models\ViewModel\AddLone.cs" />
     <Compile Include="Models\ViewModel\AlbumOfArtist.cs" />
     <Compile Include="Global.asax.cs">
@@ -209,7 +212,6 @@
     <Compile Include="Models\VideoLibrary\Producer.cs" />
     <Compile Include="Models\VideoLibrary\Studio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Provider\SiteRole.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -323,11 +325,13 @@
     <Content Include="Views\RoleMasters\Details.cshtml" />
     <Content Include="Views\RoleMasters\Edit.cshtml" />
     <Content Include="Views\RoleMasters\Index.cshtml" />
+    <Content Include="Views\Admin\ListUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\ViewsController\" />
     <Folder Include="Images\" />
+    <Folder Include="Provider\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -345,6 +349,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202005250446214_initial migration.resx">
       <DependentUpon>202005250446214_initial migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005250541071_initial migration1.resx">
+      <DependentUpon>202005250541071_initial migration1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

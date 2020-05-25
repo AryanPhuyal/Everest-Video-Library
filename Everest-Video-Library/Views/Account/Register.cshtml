@@ -29,12 +29,17 @@
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
+
     <div class="form-group">
-        <label> Role</label>
+        @Html.Label("user Role", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @*@Html.DropDownList("Name")*@
+            @Html.DropDownList("UserRoles", (SelectList)ViewBag.Name, " ")
+        </div>
     </div>
     <div class="form-group">
 
-            
+
 
     </div>
     <div class="form-group">
