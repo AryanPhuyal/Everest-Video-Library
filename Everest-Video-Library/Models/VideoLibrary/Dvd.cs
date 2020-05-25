@@ -17,7 +17,8 @@ namespace Everest_Video_Library.Models
         [ForeignKey("AlbumId")]
         public virtual Album  Album { get; set; }
 
-        public IEnumerable<Lone> Lones { get; set; }
+        public virtual IEnumerable<Lone> Lones { get; set; }
+
 
     }
 }

@@ -170,6 +170,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RoleMastersController.cs" />
     <Compile Include="Controllers\Utility\SaveToFile.cs" />
     <Compile Include="Controllers\VideoLibrary\AlbumsController.cs" />
     <Compile Include="Controllers\VideoLibrary\ArtistAlbumsController.cs" />
@@ -181,27 +182,12 @@
     <Compile Include="Controllers\VideoLibrary\MembersController.cs" />
     <Compile Include="Controllers\VideoLibrary\ProducersController.cs" />
     <Compile Include="Controllers\VideoLibrary\StudiosController.cs" />
-    <Compile Include="Migrations\202005230655002_initial migration.cs" />
-    <Compile Include="Migrations\202005230655002_initial migration.Designer.cs">
-      <DependentUpon>202005230655002_initial migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005231054208_migration1.cs" />
-    <Compile Include="Migrations\202005231054208_migration1.Designer.cs">
-      <DependentUpon>202005231054208_migration1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005231128398_migration2.cs" />
-    <Compile Include="Migrations\202005231128398_migration2.Designer.cs">
-      <DependentUpon>202005231128398_migration2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005231537150_migration3.cs" />
-    <Compile Include="Migrations\202005231537150_migration3.Designer.cs">
-      <DependentUpon>202005231537150_migration3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005231902533_migration4.cs" />
-    <Compile Include="Migrations\202005231902533_migration4.Designer.cs">
-      <DependentUpon>202005231902533_migration4.cs</DependentUpon>
+    <Compile Include="Migrations\202005250446214_initial migration.cs" />
+    <Compile Include="Migrations\202005250446214_initial migration.Designer.cs">
+      <DependentUpon>202005250446214_initial migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\RoleMaster.cs" />
     <Compile Include="Models\ViewModel\AddLone.cs" />
     <Compile Include="Models\ViewModel\AlbumOfArtist.cs" />
     <Compile Include="Global.asax.cs">
@@ -223,6 +209,7 @@
     <Compile Include="Models\VideoLibrary\Producer.cs" />
     <Compile Include="Models\VideoLibrary\Studio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provider\SiteRole.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +315,14 @@
     <Content Include="Views\MemberCatagories\Create.cshtml" />
     <Content Include="Views\Lones\Create.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Albums\Old.cshtml" />
+    <Content Include="Views\Dvds\OnLone.cshtml" />
+    <Content Include="Views\Members\NotBorrowed.cshtml" />
+    <Content Include="Views\RoleMasters\Create.cshtml" />
+    <Content Include="Views\RoleMasters\Delete.cshtml" />
+    <Content Include="Views\RoleMasters\Details.cshtml" />
+    <Content Include="Views\RoleMasters\Edit.cshtml" />
+    <Content Include="Views\RoleMasters\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -348,20 +343,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202005230655002_initial migration.resx">
-      <DependentUpon>202005230655002_initial migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005231054208_migration1.resx">
-      <DependentUpon>202005231054208_migration1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005231128398_migration2.resx">
-      <DependentUpon>202005231128398_migration2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005231537150_migration3.resx">
-      <DependentUpon>202005231537150_migration3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005231902533_migration4.resx">
-      <DependentUpon>202005231902533_migration4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202005250446214_initial migration.resx">
+      <DependentUpon>202005250446214_initial migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

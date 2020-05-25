@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -51,5 +52,6 @@ namespace Everest_Video_Library.Models
         public System.Data.Entity.DbSet<Everest_Video_Library.Models.VideoLibrary.MemberCatagory> MemberCatagories { get; set; }
 
         public System.Data.Entity.DbSet<Everest_Video_Library.Controllers.ViewModel.AddLone> AddLones { get; set; }
+
     }
 }

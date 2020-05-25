@@ -11,6 +11,8 @@ using Everest_Video_Library.Models.VideoLibrary;
 
 namespace Everest_Video_Library.Controllers.VideoLibrary
 {
+    [Authorize]
+
     public class ProducersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

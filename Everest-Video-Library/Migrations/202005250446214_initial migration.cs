@@ -32,21 +32,20 @@ namespace Everest_Video_Library.Migrations
                         StudioId = c.Int(nullable: false),
                         Description = c.String(),
                         Name = c.String(nullable: false, maxLength: 50),
-                        Discriminator = c.String(nullable: false, maxLength: 128),
-                        AlbumOfArtist_Id = c.Int(),
                         AddLone_Id = c.Int(),
+                        AlbumOfArtist_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Catagories", t => t.CatagoryId, cascadeDelete: true)
                 .ForeignKey("dbo.Producers", t => t.ProducerId, cascadeDelete: true)
                 .ForeignKey("dbo.Studios", t => t.StudioId, cascadeDelete: true)
-                .ForeignKey("dbo.Artists", t => t.AlbumOfArtist_Id)
                 .ForeignKey("dbo.AddLones", t => t.AddLone_Id)
+                .ForeignKey("dbo.Artists", t => t.AlbumOfArtist_Id)
                 .Index(t => t.CatagoryId)
                 .Index(t => t.ProducerId)
                 .Index(t => t.StudioId)
-                .Index(t => t.AlbumOfArtist_Id)
-                .Index(t => t.AddLone_Id);
+                .Index(t => t.AddLone_Id)
+                .Index(t => t.AlbumOfArtist_Id);
             
             CreateTable(
                 "dbo.Catagories",
@@ -76,23 +75,6 @@ namespace Everest_Video_Library.Migrations
                         Name = c.String(nullable: false, maxLength: 50),
                     })
                 .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Artists",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(nullable: false, maxLength: 50),
-                        LastName = c.String(nullable: false, maxLength: 50),
-                        Email = c.String(nullable: false),
-                        Address = c.String(maxLength: 100),
-                        Gender = c.String(nullable: false, maxLength: 10),
-                        Discriminator = c.String(nullable: false, maxLength: 128),
-                        AlbumList_Id = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Albums", t => t.AlbumList_Id)
-                .Index(t => t.AlbumList_Id);
             
             CreateTable(
                 "dbo.Members",
@@ -141,6 +123,20 @@ namespace Everest_Video_Library.Migrations
                 .Index(t => t.ArtistId);
             
             CreateTable(
+                "dbo.Artists",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        FirstName = c.String(nullable: false, maxLength: 50),
+                        LastName = c.String(nullable: false, maxLength: 50),
+                        Email = c.String(nullable: false),
+                        Address = c.String(maxLength: 100),
+                        Gender = c.String(nullable: false, maxLength: 10),
+                        Discriminator = c.String(nullable: false, maxLength: 128),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.Dvds",
                 c => new
                     {
@@ -159,6 +155,10 @@ namespace Everest_Video_Library.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         MemberId = c.Int(nullable: false),
                         DvdId = c.Int(nullable: false),
+                        LoneDate = c.DateTime(nullable: false),
+                        ReturnDate = c.DateTime(),
+                        ReturnedDate = c.DateTime(),
+                        FineAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Dvds", t => t.DvdId, cascadeDelete: true)
@@ -194,6 +194,7 @@ namespace Everest_Video_Library.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        RoleMasterId = c.Int(nullable: false),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -207,6 +208,8 @@ namespace Everest_Video_Library.Migrations
                         UserName = c.String(nullable: false, maxLength: 256),
                     })
                 .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.RoleMasters", t => t.RoleMasterId, cascadeDelete: true)
+                .Index(t => t.RoleMasterId)
                 .Index(t => t.UserName, unique: true, name: "UserNameIndex");
             
             CreateTable(
@@ -234,11 +237,21 @@ namespace Everest_Video_Library.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
+            CreateTable(
+                "dbo.RoleMasters",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUsers", "RoleMasterId", "dbo.RoleMasters");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
@@ -246,18 +259,18 @@ namespace Everest_Video_Library.Migrations
             DropForeignKey("dbo.Lones", "DvdId", "dbo.Dvds");
             DropForeignKey("dbo.Dvds", "AlbumId", "dbo.Albums");
             DropForeignKey("dbo.ArtistAlbums", "ArtistId", "dbo.Artists");
+            DropForeignKey("dbo.Albums", "AlbumOfArtist_Id", "dbo.Artists");
             DropForeignKey("dbo.ArtistAlbums", "AlbumId", "dbo.Albums");
             DropForeignKey("dbo.Members", "AddLone_Id", "dbo.AddLones");
             DropForeignKey("dbo.Members", "CatagoryId", "dbo.MemberCatagories");
             DropForeignKey("dbo.Albums", "AddLone_Id", "dbo.AddLones");
-            DropForeignKey("dbo.Artists", "AlbumList_Id", "dbo.Albums");
-            DropForeignKey("dbo.Albums", "AlbumOfArtist_Id", "dbo.Artists");
             DropForeignKey("dbo.Albums", "StudioId", "dbo.Studios");
             DropForeignKey("dbo.Albums", "ProducerId", "dbo.Producers");
             DropForeignKey("dbo.Albums", "CatagoryId", "dbo.Catagories");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
+            DropIndex("dbo.AspNetUsers", new[] { "RoleMasterId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
@@ -268,12 +281,12 @@ namespace Everest_Video_Library.Migrations
             DropIndex("dbo.ArtistAlbums", new[] { "AlbumId" });
             DropIndex("dbo.Members", new[] { "AddLone_Id" });
             DropIndex("dbo.Members", new[] { "CatagoryId" });
-            DropIndex("dbo.Artists", new[] { "AlbumList_Id" });
-            DropIndex("dbo.Albums", new[] { "AddLone_Id" });
             DropIndex("dbo.Albums", new[] { "AlbumOfArtist_Id" });
+            DropIndex("dbo.Albums", new[] { "AddLone_Id" });
             DropIndex("dbo.Albums", new[] { "StudioId" });
             DropIndex("dbo.Albums", new[] { "ProducerId" });
             DropIndex("dbo.Albums", new[] { "CatagoryId" });
+            DropTable("dbo.RoleMasters");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
@@ -281,10 +294,10 @@ namespace Everest_Video_Library.Migrations
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Lones");
             DropTable("dbo.Dvds");
+            DropTable("dbo.Artists");
             DropTable("dbo.ArtistAlbums");
             DropTable("dbo.MemberCatagories");
             DropTable("dbo.Members");
-            DropTable("dbo.Artists");
             DropTable("dbo.Studios");
             DropTable("dbo.Producers");
             DropTable("dbo.Catagories");

@@ -13,6 +13,8 @@ using Everest_Video_Library.Models.VideoLibrary;
 
 namespace Everest_Video_Library.Controllers.VideoLibrary
 {
+    [Authorize(Roles ="Manager")]
+
     public class LonesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -228,6 +230,12 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
             album.NoOfStock += 1;
             db.SaveChanges();
             return Redirect("/Members");
+        }
+
+        public ActionResult LatestLone()
+        {
+
+            return View();
         }
 
         protected override void Dispose(bool disposing)

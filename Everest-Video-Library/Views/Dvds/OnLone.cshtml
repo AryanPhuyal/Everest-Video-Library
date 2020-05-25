@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Everest_Video_Library.Models.VideoLibrary.Lone>
+
+@{
+    ViewBag.Title = "OnLone";
+}
+
+<h2>OnLone</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Dvds.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Members.FirstName)
+        </th>
+        <th>
+            Album Name
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoneDate)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ReturnDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReturnedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FineAmount)
+        </th>
+
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dvds.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Members.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem =>item.Dvds.Album.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoneDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReturnDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReturnedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FineAmount)
+        </td>
+
+    </tr>
+}
+
+</table>

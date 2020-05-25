@@ -11,6 +11,8 @@ using Everest_Video_Library.Models.VideoLibrary;
 
 namespace Everest_Video_Library.Controllers.VideoLibrary
 {
+    [Authorize]
+
     public class MembersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -128,6 +130,21 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
             db.Members.Remove(member);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        public ActionResult NotBorrowed()
+        {
+            List<Member> members = db.Members.ToList();
+            foreach(Member member in members.ToList())
+            {
+                var before = DateTime.Today.AddDays(-31);
+                var lones = db.Lones.Where(X => X.MemberId == member.Id && DateTime.Compare(before,X.LoneDate)<0).ToList();
+                if(lones.Count != 0)
+                {
+                    members.Remove(member);
+                }
+            }
+
+            return View(members);
         }
 
         protected override void Dispose(bool disposing)

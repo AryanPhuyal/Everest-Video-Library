@@ -12,6 +12,8 @@ using Everest_Video_Library.Models.VideoLibrary;
 
 namespace Everest_Video_Library.Controllers.VideoLibrary
 {
+    [Authorize(Roles ="Manager")]
+
     public class CatagoriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

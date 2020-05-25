@@ -6,10 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using Everest_Video_Library.Models;
+using Everest_Video_Library.Models.VideoLibrary;
 
 namespace Everest_Video_Library.Controllers.VideoLibrary
 {
+    [Authorize(Roles ="Manager")]
+
     public class DvdsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -17,6 +21,7 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
         // GET: Dvds
         public ActionResult Index()
         {
+
             var dvds = db.Dvds.Include(d => d.Album);
             return View(dvds.ToList());
         }
@@ -121,6 +126,12 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
             db.Dvds.Remove(dvd);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult OnLone()
+        {
+            List<Lone> lone = db.Lones.Where(X=>X.ReturnedDate!=null).ToList();
+            return View(lone);
         }
 
         protected override void Dispose(bool disposing)

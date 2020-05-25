@@ -11,15 +11,17 @@ using Everest_Video_Library.Models.VideoLibrary;
 
 namespace Everest_Video_Library.Controllers.VideoLibrary
 {
+    [Authorize(Roles ="Manager")]
     public class AlbumsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Albums
+
         public ActionResult Index()
         {
             var albums = db.Albums.Include(a => a.Catagory).Include(a => a.Producer).Include(a => a.Studio);
-            return View(albums.ToList());
+            return View(albums.ToList());   
         }
 
         // GET: Albums/Details/5
@@ -36,6 +38,7 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
             }
             return View(album);
         }
+        [Authorize(Roles = "Manager")]
 
         // GET: Albums/Create
         public ActionResult Create()
@@ -146,6 +149,13 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
             db.Albums.Remove(album);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Old()
+        {
+            DateTime old = DateTime.Now.AddDays(-365);
+          var albums =   db.Albums.Where(X =>DateTime.Compare(old,X.ReleaseDate)>0).ToList();
+            return View(albums);
         }
 
         protected override void Dispose(bool disposing)

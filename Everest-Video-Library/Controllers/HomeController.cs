@@ -8,11 +8,11 @@ using System.Web.Mvc;
 
 namespace Everest_Video_Library.Controllers
 {
+    [Authorize]
     [Route("Home")]
     public class HomeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
 
         [Route("/{onStock:int?}/{actor}")]
         public ActionResult Index(string onStock,string actor)

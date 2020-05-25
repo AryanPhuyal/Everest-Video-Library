@@ -46,7 +46,6 @@ namespace Everest_Video_Library.Models.VideoLibrary
         [ForeignKey("ProducerId")]
         public virtual Producer Producer { get; set; }
         public virtual IEnumerable<ArtistAlbum> ArtistAlbums { get; set; }
+        public virtual IEnumerator<Lone> Lones { get; set; }
     }
-
-
 }
