@@ -10,6 +10,8 @@ using System.Web.Mvc;
 
 namespace Everest_Video_Library.Controllers
 {
+    [AuthLog(Roles = "Manager")]
+
     public class AdminController : Controller
     {
 
