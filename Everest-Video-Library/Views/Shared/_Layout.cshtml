@@ -8,66 +8,70 @@
     @Styles.Render("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
 
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Site.css")
+
     @Scripts.Render("~/bundles/modernizr")
+
 
 </head>
 <body>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="/Catagories">Catagories </a>
+        <a href="/Albums">Albums </a>
+        <a href="/Dvds">Dvds </a>
+        <a href="/Studios">Studios </a>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
-        
-        <a class="navbar-brand" href="/Home">Everest Video Library</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    @Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })
-                </li>
-                <li class="nav-item">
-                    @Html.ActionLink("About", "About", "Home", new { @class = "nav-link" })
-                </li>
-                <li class="nav-item">
-                    @Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        More
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        @Html.ActionLink("Genric", "Index", "Catagories", new { @class = "dropdown-item" })
-                        @Html.ActionLink("Albums", "Index", "Albums", new { @class = "dropdown-item" })
-                        @Html.ActionLink("Dvds", "Index","Dvds", new { @class = "dropdown-item" })
-                        @Html.ActionLink("Artists","Index","Artists",new { @class="dropdown-item"})
-                        @Html.ActionLink("Artist and album","Index","ArtistAlbum", new { @class="dropdown-item"})
+        <a href="/Artists">Artists </a>
+        <a href="/ArtistAlbums">Artist and Album </a>
+        <a href="/Producers">Producer </a>
+        <a href="/MemberCatagories">Member Catagories </a>
+        <a href="/Members">Members </a>
+        <a href="/Lones">Lones </a>
+        <a href="/Admin">Admin </a>
 
-                        @Html.ActionLink("Producer", "Index", "Producer", new { @class = "dropdown-item" })
-                        @Html.ActionLink("Member Catagories", "Index", "MemberCatagories", new { @class = "dropdown-item" })
+    </div>
 
-                        @Html.ActionLink("Members", "Index", "Members", new { @class = "dropdown-item" })
-                        @Html.ActionLink("Lones", "Index", "Lones", new { @class = "dropdown-item" })
-                    </div>
-                </li>
+    <!-- Use any element to open the sidenav -->
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
+        <span onclick=openNav() class="glyphicon glyphicon-th-list text-muted" style="cursor:pointer; font-size:30px" > </span>
+        <span class="navbar-brand">Everest Video Library</span>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+              
             </ul>
             <ul>
                 @Html.Partial("_LoginPartial")
+
             </ul>
         </div>
     </nav>
 
-
-    <div class="container body-content">
+    <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+    <div id="main" class="container-fluid">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - RAPP</p>
         </footer>
     </div>
 
+    <script>
+        /* Set the width of the side navigation to 250px */
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        /* Set the width of the side navigation to 0 */
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+    </script>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js")
-
+    @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>

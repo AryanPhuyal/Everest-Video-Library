@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Everest_Video_Library.Models.VideoLibrary.Lone>
+
+
+@{
+    ViewBag.Title = "OnLoneDate";
+}
+
+
+@{ 
+        var albums = Model.GroupBy(X => X.Dvds.Album.Name);
+    }
+    @foreach (var album in albums)
+    {
+        <div>
+            @album.Key;
+        </div>
+        var lone = album.ToList().GroupBy(X => X.LoneDate);
+        foreach(var i in lone)
+        {
+            <h4>
+                @i.Key
+            </h4>
+            <ul>
+                @foreach (var j in i)
+                {
+                    <li>
+                        @j.Members.FirstName + " " + @j.Members.LastName
+                    </li>
+                }
+
+            </ul>
+        }
+    }
+
+
+
+<h2>OnLoneDate</h2>
+

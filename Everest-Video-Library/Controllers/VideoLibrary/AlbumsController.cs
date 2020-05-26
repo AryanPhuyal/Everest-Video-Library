@@ -11,15 +11,15 @@ using Everest_Video_Library.Models.VideoLibrary;
 
 namespace Everest_Video_Library.Controllers.VideoLibrary
 {
-    [Authorize(Roles ="Manager")]
     public class AlbumsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Albums
-
+       [AuthLog(Roles ="Manager")]
         public ActionResult Index()
         {
+
             var albums = db.Albums.Include(a => a.Catagory).Include(a => a.Producer).Include(a => a.Studio);
             return View(albums.ToList());   
         }
@@ -38,7 +38,7 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
             }
             return View(album);
         }
-        [Authorize(Roles = "Manager")]
+        [Authorize]
 
         // GET: Albums/Create
         public ActionResult Create()

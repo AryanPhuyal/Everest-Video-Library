@@ -51,7 +51,6 @@ namespace Everest_Video_Library.Models
 
         public System.Data.Entity.DbSet<Everest_Video_Library.Models.VideoLibrary.MemberCatagory> MemberCatagories { get; set; }
 
-        public System.Data.Entity.DbSet<Everest_Video_Library.Controllers.ViewModel.AddLone> AddLones { get; set; }
 
     }
 }

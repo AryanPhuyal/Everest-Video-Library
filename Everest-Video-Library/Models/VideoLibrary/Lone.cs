@@ -25,4 +25,6 @@ namespace Everest_Video_Library.Models.VideoLibrary
         [ForeignKey("DvdId")]
         public virtual Dvd Dvds { get; set; }
     }
+    
+
 }

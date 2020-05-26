@@ -134,6 +134,14 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
             return View(lone);
         }
 
+        public ActionResult OnLoneDate()
+
+        {
+              
+
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
