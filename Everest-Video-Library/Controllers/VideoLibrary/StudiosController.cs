@@ -11,7 +11,8 @@ using Everest_Video_Library.Models.VideoLibrary;
 
 namespace Everest_Video_Library.Controllers.VideoLibrary
 {
-    [Authorize]
+    [AuthLog(Roles = "Manager")]
+
 
     public class StudiosController : Controller
     {

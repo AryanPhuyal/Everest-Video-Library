@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -11,8 +12,7 @@ using Everest_Video_Library.Models.VideoLibrary;
 
 namespace Everest_Video_Library.Controllers.VideoLibrary
 {
-    [Authorize(Roles ="Manager")]
-
+    [AuthLog(Roles = "Manager")]
     public class LonesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -42,8 +42,8 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
         // GET: Lones/Create
         public ActionResult Create()
         {
-            ViewBag.Error = Request.Cookies["Error"]!=null?Request.Cookies["Error"].Value:null;
-            ViewBag.Success = Request.Cookies["Success"]!=null?Request.Cookies["Success"].Value:null;
+            ViewBag.Error = Request.Cookies["Error"] != null ? Request.Cookies["Error"].Value : null;
+            ViewBag.Success = Request.Cookies["Success"] != null ? Request.Cookies["Success"].Value : null;
             HttpCookie cokie = new HttpCookie("Error");
             cokie["Error"] = null;
             cokie["Success"] = null;
@@ -63,7 +63,7 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Obsolete]
-        public ActionResult Create(int MemberId,int AlbumId)
+        public ActionResult Create(int MemberId, int AlbumId)
         {
             HttpCookie cokie = new HttpCookie("Error");
 
@@ -73,16 +73,16 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
                 Album album = db.Albums.Find(AlbumId);
                 Member member = db.Members.Find(MemberId);
                 int memberAge = Convert.ToInt32((DateTime.Today - member.DateOfBirth).TotalDays / 365);
-                
 
-                if(album.AgeContent & memberAge < 18)
+
+                if (album.AgeContent & memberAge < 18)
                 {
                     cokie["Error"] = "Age must be 18+ to view this content";
                     Response.Cookies.Add(cokie);
 
                     return RedirectToAction("Create");
                 }
-                if(album.NoOfStock < 1)
+                if (album.NoOfStock < 1)
                 {
                     cokie["Error"] = "Sorry! we dont have stock";
                     Response.Cookies.Add(cokie);
@@ -92,15 +92,15 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
                 }
                 var lone = (from lon in db.Lones
                             where
-                            (lon.ReturnedDate == null 
-                                && lon.MemberId ==MemberId)
+                            (lon.ReturnedDate == null
+                                && lon.MemberId == MemberId)
                             select new
                             {
                                 lon.DvdId,
                                 lon.ReturnedDate,
                                 lon.MemberId
-                            }).ToList();               
-               
+                            }).ToList();
+
 
                 int noOfDvdsMemberCanLone = member.Catagory.NoOfDvdRent;
                 int noOfDaysMemberCanLone = member.Catagory.LoneDays;
@@ -182,34 +182,59 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
         // GET: Lones/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (id == null )
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Lone lone = db.Lones.Find(id);
-            if (lone == null)
+            var Albumdvd = db.Dvds.FirstOrDefault(X => X.Id == id);
+            Albumdvd.OnStock = true;
+            var lone = db.Lones.FirstOrDefault(X => X.DvdId == id);
+            lone.ReturnedDate = DateTime.Today;
+            if (DateTime.Today > lone.ReturnDate)
             {
-                return HttpNotFound();
+                int daysMore = (DateTime.Today - (DateTime)lone.ReturnDate).Days;
+
+                decimal finrPerday = lone.Members.Catagory.FinePerDays;
+                lone.FineAmount = finrPerday * daysMore;
             }
-            return View(lone);
+            var album = db.Albums.FirstOrDefault(X => X.Id == lone.Dvds.AlbumId);
+            album.NoOfStock += 1;
+            db.SaveChanges();
+            return Redirect("/Members");
         }
 
         // POST: Lones/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
-            Lone lone = db.Lones.Find(id);
-            db.Lones.Remove(lone);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var Albumdvd = db.Dvds.FirstOrDefault(X => X.Id == id);
+            Albumdvd.OnStock = true;
+            var lone = db.Lones.FirstOrDefault(X => X.DvdId == id);
+            lone.ReturnedDate = DateTime.Today;
+            if (DateTime.Today > lone.ReturnDate)
+            {
+                int daysMore = (DateTime.Today - (DateTime)lone.ReturnDate).Days;
+
+                decimal finrPerday = lone.Members.Catagory.FinePerDays;
+                lone.FineAmount = finrPerday * daysMore;
+            }
+            var album = db.Albums.FirstOrDefault(X => X.Id == lone.Dvds.AlbumId);
+            album.NoOfStock += 1;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Redirect("/Members");
+           
         }
 
 
         [Route("/{dvd:int?}/{member:int?}")]
-        public ActionResult Return(int? dvd,int? member)
+        public ActionResult Return(int? dvd, int? member)
         {
-            if(dvd==null&member==null)
+            if (dvd == null & member == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -232,8 +257,10 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
 
         public ActionResult LatestLone()
         {
+            var dayBefore = DateTime.Today.AddDays(-31);
+            var lones = db.Lones.Where(X => X.LoneDate > dayBefore).ToList();
 
-            return View();
+            return View(lones);
         }
 
         protected override void Dispose(bool disposing)

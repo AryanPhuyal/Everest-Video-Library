@@ -12,7 +12,9 @@ using Everest_Video_Library.Models.VideoLibrary;
 
 namespace Everest_Video_Library.Controllers.VideoLibrary
 {
-    [Authorize(Roles ="Manager")]
+
+    [AuthLog(Roles = "Manager")]
+
 
     public class CatagoriesController : Controller
     {

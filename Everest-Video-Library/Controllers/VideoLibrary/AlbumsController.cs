@@ -146,6 +146,11 @@ namespace Everest_Video_Library.Controllers.VideoLibrary
         public ActionResult DeleteConfirmed(int id)
         {
             Album album = db.Albums.Find(id);
+            var dvds = db.Dvds.Where(X => X.AlbumId == id);
+            foreach(var i in dvds)
+            {
+                db.Dvds.Remove(i);
+            }
             db.Albums.Remove(album);
             db.SaveChanges();
             return RedirectToAction("Index");
